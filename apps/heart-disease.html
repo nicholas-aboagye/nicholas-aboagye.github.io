@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>US Heart Disease Rate | Nicholas Aboagye | UTD GISC</title>
+
+    <!-- Load Calcite components from CDN -->
+    <script type="module" src="https://js.arcgis.com/calcite-components/3.3.3/calcite.esm.js"></script>
+
+    <!-- Load the ArcGIS Maps SDK for JavaScript from CDN -->
+    <script src="https://js.arcgis.com/4.34/"></script>
+
+    <!-- Load Map components from CDN-->
+    <script type="module" src="https://js.arcgis.com/4.34/map-components/"></script>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+
+      #statesPanel {
+        width: 250px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        text-align: center;
+      }
+
+      calcite-list {
+        --calcite-list-background-color-hover: rgb(255, 195, 10, 0.4);
+      }
+
+      #clickInfo {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        width: 250px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        padding: 15px;
+        display: none;
+        z-index: 100;
+      }
+
+      .close-btn {
+        float: right;
+        cursor: pointer;
+        font-size: 18px;
+        color: #666;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Using your US Heart Disease WebMap -->
+    <arcgis-map item-id="2cd38b6291574a628676c074ffaff5cd" basemap="dark-gray-vector">
+      <arcgis-zoom slot="top-left"></arcgis-zoom>
+      <arcgis-search slot="top-left"></arcgis-search>
+      <arcgis-legend slot="bottom-left"></arcgis-legend>
+      <arcgis-layer-list slot="bottom-left"></arcgis-layer-list>
+      
+      <calcite-panel
+        id="statesPanel"
+        slot="top-right"
+        heading="US States"
+        collapsible
+        scale="s">
+        <calcite-list
+          id="statesList"
+          label="US States"
+          selection-mode="multiple"
+          scale="s">
+        </calcite-list>
+      </calcite-panel>
+    </arcgis-map>
+
+    <!-- Click Information Panel -->
+    <div id="clickInfo"></div>
+
+    <script type="module">
+      const [reactiveUtils, Query, Popup, webMercatorUtils] = await $arcgis.import([
+        "@arcgis/core/core/reactiveUtils.js",
+        "@arcgis/core/rest/support/Query.js",
+        "@arcgis/core/widgets/Popup.js",
+        "@arcgis/core/geometry/support/webMercatorUtils.js"
+      ]);
+
+      // Get DOM elements
+      const statesPanel = document.getElementById("statesPanel");
+      const statesList = document.getElementById("statesList");
+      const clickInfo = document.getElementById("clickInfo");
+
+      const viewElement = document.querySelector("arcgis-map");
+
+      // Customize the popup 
+      viewElement.popup = new Popup({
+        dockEnabled: true,
+        dockOptions: {
+          breakpoint: false,
+          position: "bottom-center",
+        },
+      });
+
+      // Add highlight options 
+      viewElement.highlights = [
+        {
+          name: "multiselect",
+          color: "#007ac2",
+          fillOpacity: 0.2,
+          haloColor: "#007ac2",
+          haloOpacity: 0.6,
+        },
+        { name: "default", color: "gold", fillOpacity: 0.2, haloColor: "gold", haloOpacity: 0.8 },
+      ];
+
+      let hoverHighlight = null;
+
+      // Wait for the view to be ready
+      await viewElement.viewOnReady();
+      
+      // Get the States layer
+      const statesLayer = viewElement.map.allLayers.filter((layer) => {
+        return layer.visible && (layer.type === "feature" || layer.type === "scene");
+      }).items[0];
+
+      if (statesLayer) {
+        // Define the attributes to use when querying the layer
+        statesLayer.outFields = ["*"];
+
+        // Update the states list
+        updateStatesList(statesLayer, true);
+
+        // Update list when view changes (same pattern as campus buildings)
+        viewElement.addEventListener("arcgisViewChange", (event) => {
+          const visible = viewElement.stationary;
+          updateStatesList(statesLayer, visible);
+        });
+
+        // Add hover functionality on the map itself
+        viewElement.whenLayerView(statesLayer).then((layerView) => {
+          // Add pointer-move event to show existing popup on hover
+          viewElement.addEventListener("arcgisViewPointerMove", (event) => {
+            const screenPoint = { x: event.detail.x, y: event.detail.y };
+            
+            viewElement.hitTest(screenPoint).then((response) => {
+              if (response.results.length > 0) {
+                const graphic = response.results.find(result => 
+                  result.graphic && result.graphic.layer === statesLayer
+                );
+                
+                if (graphic) {
+                  // Use the existing popup from WebMap
+                  viewElement.popup.open({
+                    features: [graphic.graphic],
+                    location: event.detail.mapPoint
+                  });
+                } else {
+                  viewElement.popup.close();
+                }
+              } else {
+                viewElement.popup.close();
+              }
+            });
+          });
+        });
+      }
+
+      // Updates the states list according to the current view (same pattern as campus buildings)
+      function updateStatesList(layer, visible) {
+        if (visible) {
+          viewElement.whenLayerView(layer).then((layerView) => {
+            if (statesList.children.length === 0) {
+              populateStatesList(layerView);
+            }
+
+            const query = new Query({ geometry: viewElement.visibleArea });
+            layerView.queryFeatures(query).then((result) => {
+              statesPanel.description = `Currently in view: ${result.features.length} states`;
+
+              for (const listItem of statesList.children) {
+                for (const feature of result.features) {
+                  const stateName = getStateName(feature);
+                  if (listItem.label === stateName) {
+                    listItem.removeAttribute("closed");
+                    break;
+                  }
+                }
+              }
+            });
+          });
+        } else {
+          for (const listItem of statesList.children) {
+            listItem.setAttribute("closed", "");
+          }
+        }
+      }
+
+      // Get state name from feature attributes
+      function getStateName(feature) {
+        const attrs = feature.attributes;
+        return attrs.NAME || attrs.State || attrs.STATE_NAME || attrs.ADMIN || `State ${feature.attributes.OBJECTID}`;
+      }
+
+      // Populate the states list
+      function populateStatesList(layerView) {
+        reactiveUtils
+          .whenOnce(() => !layerView.updating)
+          .then(() => {
+            layerView.queryFeatures({}).then((result) => {
+              statesPanel.description = `Currently in view: ${result.features.length} states`;
+
+              result.features.forEach((feature) => {
+                // Create list item and action button 
+                const li = document.createElement("calcite-list-item");
+                li.setAttribute("label", getStateName(feature));
+                
+                const action = document.createElement("calcite-action");
+                action.setAttribute("slot", "actions-end");
+                action.setAttribute("icon", "zoom-to-object");
+                action.setAttribute("scale", "s");
+                li.appendChild(action);
+                statesList.appendChild(li);
+
+                const objectId = feature.attributes.ObjectId || feature.attributes.OBJECTID || feature.attributes.OID || feature.attributes.FID;
+
+                // Hover events - enhanced to show popup with better geometry handling
+                li.addEventListener("mouseenter", () => {
+                  hoverHighlight = layerView.highlight(feature);
+                  
+                  // Get the center point of the state for popup location
+                  let popupLocation;
+                  if (feature.geometry.type === "polygon") {
+                    popupLocation = feature.geometry.extent.center;
+                  } else if (feature.geometry.centroid) {
+                    popupLocation = feature.geometry.centroid;
+                  } else {
+                    popupLocation = feature.geometry.extent.center;
+                  }
+                  
+                  // Show the popup with a slight delay
+                  setTimeout(() => {
+                    viewElement.popup.open({
+                      features: [feature],
+                      location: popupLocation,
+                      updateLocationEnabled: false
+                    });
+                  }, 200);
+                });
+
+                li.addEventListener("mouseleave", () => {
+                  hoverHighlight?.remove();
+                  setTimeout(() => {
+                    viewElement.popup.close();
+                  }, 100);
+                });
+
+                // Selection events 
+                let selectionHighlight = null;
+                li.addEventListener("calciteListItemSelect", (event) => {
+                  if (event.target.selected) {
+                    selectionHighlight = layerView.highlight(objectId, { name: "multiselect" });
+                  } else {
+                    selectionHighlight?.remove();
+                  }
+                });
+
+                // Zoom events - improved to handle states properly
+                action.addEventListener("click", (event) => {
+                  event.stopPropagation();
+                  zoomToState(layerView, feature, objectId);
+                });
+              });
+            });
+          });
+      }
+
+      // Improved zoom function for states
+      function zoomToState(layerView, feature, objectId) {
+        console.log("Zooming to state:", getStateName(feature), "ObjectID:", objectId);
+        
+        // Method 1: Try using the feature's geometry directly
+        if (feature.geometry) {
+          console.log("Using feature geometry for zoom");
+          viewElement.goTo({
+            target: feature.geometry,
+            zoom: 6
+          }, {
+            speedFactor: 0.5
+          }).catch(error => {
+            console.log("Geometry zoom failed, trying extent method:", error);
+            // Method 2: Fallback to extent query
+            tryExtentZoom(layerView, objectId);
+          });
+        } else {
+          // Method 2: Use extent query
+          tryExtentZoom(layerView, objectId);
+        }
+      }
+
+      // Fallback extent zoom method
+      function tryExtentZoom(layerView, objectId) {
+        console.log("Trying extent zoom for ObjectID:", objectId);
+        
+        layerView.queryExtent({ objectIds: [objectId] }).then((result) => {
+          console.log("Extent result:", result);
+          if (result.extent) {
+            viewElement.goTo(result.extent.expand(1.5), { speedFactor: 0.5 });
+          } else {
+            console.log("No extent found, trying feature query");
+            // Method 3: Query the feature and use its geometry
+            layerView.queryFeatures({ objectIds: [objectId] }).then((featureResult) => {
+              if (featureResult.features.length > 0 && featureResult.features[0].geometry) {
+                viewElement.goTo({
+                  target: featureResult.features[0].geometry,
+                  zoom: 6
+                }, {
+                  speedFactor: 0.5
+                });
+              } else {
+                console.log("All zoom methods failed");
+              }
+            });
+          }
+        }).catch(error => {
+          console.log("Extent query failed:", error);
+        });
+      }
+
+      // Click event for coordinates (simplified)
+      viewElement.addEventListener("arcgisViewClick", (event) => {
+        const point = event.detail.mapPoint;
+        const geographicPoint = webMercatorUtils.webMercatorToGeographic(point);
+        
+        clickInfo.innerHTML = `
+          <span class="close-btn" onclick="document.getElementById('clickInfo').style.display='none'">&times;</span>
+          <h3>📍 Click Location</h3>
+          <p><strong>Coordinates:</strong><br>
+          Longitude: ${geographicPoint.longitude.toFixed(6)}°<br>
+          Latitude: ${geographicPoint.latitude.toFixed(6)}°</p>
+        `;
+        clickInfo.style.display = 'block';
+      });
+
+      console.log("US Heart Disease Rate map loaded successfully");
+    </script>
+  </body>
+</html>

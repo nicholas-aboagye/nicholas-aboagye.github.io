@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Projects &mdash; Nicholas Aboagye</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="topbar">
+  <div class="notice">
+    <div class="wrap">
+      <span><b>DRAFT</b></span>
+      <span>Two apps below still need a data fix before their links can go live; every other link is verified working signed-out.</span>
+    </div>
+  </div>
+  <nav class="navbar" aria-label="Main">
+    <div class="wrap">
+      <a class="mark" href="index.html">[ ABOAGYE<span>.</span> ]</a>
+      <ul class="navlinks">
+        <li><a href="index.html">About</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="projects.html" aria-current="page">Projects</a></li>
+        <li><a href="field.html">Field</a></li>
+        <li><a href="record.html">Record</a></li>
+        <li><a href="#" aria-disabled="true">CV</a></li>
+      </ul>
+      <button class="themebtn" id="themeToggle" type="button" aria-pressed="false">Theme</button>
+    </div>
+  </nav>
+</div>
+
+<header class="pagehead" id="main">
+  <canvas id="contours" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <p class="kicker">Nicholas Aboagye</p>
+    <h1>Selected work</h1>
+    <p class="pagelede">
+      Interactive maps and applications you can open and use, and the research projects
+      behind the papers.
+    </p>
+  </div>
+</header>
+
+<main>
+  <section class="band">
+    <div class="wrap">
+      <p class="eyebrow">Interactive maps &amp; applications</p>
+      <div class="projects">
+
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#4C7A4A"></span><span class="kind">Experience Builder &middot; Public health</span></div>
+          <h3>Ghana Childhood Malaria Prevention Dashboard</h3>
+          <p>
+            An interactive dashboard on childhood malaria across Ghana&rsquo;s regions, pairing a
+            prevalence view with a health-facility view so the burden and the capacity to treat
+            it can be read against each other, alongside a regional prevalence distribution chart.
+          </p>
+          <div class="stack">
+            <span class="chip">ArcGIS Experience Builder</span><span class="chip">ArcGIS Online</span><span class="chip">Thematic mapping</span>
+          </div>
+          <div class="pub-acts">
+            <a class="act" href="https://experience.arcgis.com/experience/079053ac642b47dcbd1e9480b5a4649a" target="_blank" rel="noopener">Open the dashboard &rarr;</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#13607D"></span><span class="kind">Custom web app &middot; JavaScript</span></div>
+          <h3>US Heart Disease Rate &mdash; interactive state explorer</h3>
+          <p>
+            A hand-coded mapping application rather than a configured template. A state list
+            filters live to whatever is in the current view extent; hovering a state highlights
+            it and opens its popup; states can be multi-selected and highlighted together;
+            each has a zoom-to control with geometry and extent fallbacks; and clicking the map
+            reads out longitude and latitude to six decimal places. It runs on the same web map
+            as the story below &mdash; the same data, built twice, once by configuration and
+            once in code.
+          </p>
+          <div class="stack">
+            <span class="chip">ArcGIS Maps SDK for JS</span><span class="chip">Calcite components</span><span class="chip">JavaScript</span>
+          </div>
+          <div class="pub-acts">
+            <a class="act" href="apps/heart-disease.html">Open the app &rarr;</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#9A3B3B"></span><span class="kind">StoryMap &middot; Health geography</span></div>
+          <h3>US heart disease hospitalisation change, 2013&ndash;2021</h3>
+          <p>
+            How hospitalisation rates for heart disease among adults 65 and over changed
+            unevenly across the United States over eight years &mdash; told through a scrolling
+            narrative that moves from a 2D rate map, through a sidebar app for comparing places,
+            into a 3D scene, with median household income brought in as context for the pattern.
+          </p>
+          <div class="stack">
+            <span class="chip">ArcGIS StoryMaps</span><span class="chip">3D scenes</span><span class="chip">Health data</span>
+          </div>
+          <div class="pub-acts">
+            <a class="act" href="https://storymaps.arcgis.com/stories/0e35b45a6da04c4c8dc4ff44c0e2aa1e" target="_blank" rel="noopener">Read the story &rarr;</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#5A6B7A"></span><span class="kind">Experience Builder &middot; Transport</span></div>
+          <h3>Workers&rsquo; means of commuting</h3>
+          <p>
+            How people get to work across the 48 contiguous states, with a 2D/3D toggle that
+            swaps a thematic commuting-mode map for a 3D transportation scene, and a data
+            summary view beside it so the distribution and the underlying records can be read
+            against one another.
+          </p>
+          <div class="stack">
+            <span class="chip">ArcGIS Experience Builder</span><span class="chip">2D + 3D</span><span class="chip">Census data</span>
+          </div>
+          <div class="pub-acts">
+            <a class="act" href="https://experience.arcgis.com/experience/320bcec39aaf453cb91ab1eca7e9cfff" target="_blank" rel="noopener">Open the app &rarr;</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#4C7A4A"></span><span class="kind">Web AppBuilder &middot; Site selection</span></div>
+          <h3>Home location selection by neighbourhood segment</h3>
+          <p>
+            A site-selection tool built on Esri&rsquo;s 2021 USA Tapestry Segmentation, weighing
+            candidate locations against the demographic character of the neighbourhoods around
+            them &mdash; the same suitability logic the dissertation applies to land, applied
+            here to where someone might live.
+          </p>
+          <div class="stack">
+            <span class="chip">Web AppBuilder</span><span class="chip">Tapestry segmentation</span><span class="chip">Suitability</span>
+          </div>
+          <p class="slot">Demo &rarr; needs a non-subscription data layer</p>
+        </article>
+
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#B4844A"></span><span class="kind">StoryMap &middot; Cartography</span></div>
+          <h3>Compare Vector and Raster Tile Layers</h3>
+          <p>
+            A side-by-side explainer on what actually differs between vector and raster tile
+            layers &mdash; detail, labelling and legibility &mdash; built as a teaching piece
+            that asks the reader to work out which pane is which before giving the answer.
+          </p>
+          <div class="stack">
+            <span class="chip">ArcGIS StoryMaps</span><span class="chip">Tile services</span><span class="chip">Cartography</span>
+          </div>
+          <div class="pub-acts">
+            <a class="act" href="https://storymaps.arcgis.com/stories/d56473c72a28437082e2a9ca9240253e" target="_blank" rel="noopener">Read the story &rarr;</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#9A3B3B"></span><span class="kind">Dashboard &middot; Civic data</span></div>
+          <h3>311 Incident Reports</h3>
+          <p>
+            An operations dashboard over crowdsourced 311 service requests: a live open-incident
+            gauge, a recent-incident feed, category filters, a sortable report table and
+            category breakdowns, all cross-filtering against the map. Built on sample reporting
+            data.
+          </p>
+          <div class="stack">
+            <span class="chip">ArcGIS Dashboards</span><span class="chip">Operational data</span>
+          </div>
+          <p class="slot">Link &rarr; held until the data layer is shared</p>
+        </article>
+
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#7A4A6E"></span><span class="kind">Swipe app &middot; Epidemiology</span></div>
+          <h3>US Weekly COVID Vaccination</h3>
+          <p>
+            A slider application for comparing weekly COVID-19 vaccination coverage across the
+            United States, built so two moments in the series can be swiped against each other
+            on a single map rather than read from two.
+          </p>
+          <div class="stack">
+            <span class="chip">ArcGIS Instant Apps</span><span class="chip">Time series</span>
+          </div>
+          <div class="pub-acts">
+            <a class="act" href="https://utdepps.maps.arcgis.com/apps/instant/slider/index.html?appid=14ce6b046e9e4ab2b94caf2594a43b97" target="_blank" rel="noopener">Open the app &rarr;</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#2F6F6B"></span><span class="kind">Web scene &middot; 3D</span></div>
+          <h3>Cambridge 3D web scene</h3>
+          <p>
+            A multi-layer 3D scene of Cambridge: a textured city building layer with the river,
+            parks and street network, 3D models placed into it &mdash; helicopters, street
+            benches &mdash; and an underground facility layer, so the scene can be read above
+            and below ground in the same view.
+          </p>
+          <div class="stack">
+            <span class="chip">Scene Viewer</span><span class="chip">Scene layers</span><span class="chip">3D models</span><span class="chip">Subsurface</span>
+          </div>
+          <div class="pub-acts">
+            <a class="act" href="https://www.arcgis.com/home/webscene/viewer.html?webscene=de5cbcfe13a040c9872591fa42f22e25" target="_blank" rel="noopener">Open the scene &rarr;</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-sunk">
+    <div class="wrap">
+      <p class="eyebrow">Research projects &mdash; current</p>
+      <div class="projects">
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#13607D"></span><span class="kind">Dissertation &middot; 2024&ndash;</span></div>
+          <h3>Water security assessment, NM &amp; TX working lands</h3>
+          <p>
+            Multi-criteria geospatial framework scoring water availability, accessibility,
+            quality, reliability and sustainability across working lands, then testing land-use
+            adaptation options against projected water conditions &mdash; with environmental,
+            economic, institutional and management constraints held in view.
+          </p>
+          <div class="stack"><span class="chip">Python</span><span class="chip">ArcGIS Pro</span><span class="chip">MCDA</span><span class="chip">Suitability</span></div>
+          <p class="slot">Dashboard &rarr; to come</p>
+        </article>
+
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#7A4A6E"></span><span class="kind">Collaboration &middot; 2025&ndash;26</span></div>
+          <h3>Coastal wetland change, Greater New Orleans</h3>
+          <p>
+            Satellite monitoring of post-Hurricane Katrina wetland loss, built around spatial
+            block cross-validation so accuracy figures are not inflated by autocorrelation
+            between training and test pixels.
+          </p>
+          <div class="stack"><span class="chip">Change detection</span><span class="chip">Spatial CV</span><span class="chip">Google Earth Engine</span></div>
+          <p class="slot">Preprint &rarr; on acceptance</p>
+        </article>
+
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#2F6F6B"></span><span class="kind">Collaboration &middot; 2026</span></div>
+          <h3>Wind energy siting, West Texas</h3>
+          <p>
+            Spatial determinants of where wind development actually lands in West Texas, and
+            what that implies for land use and for renewable energy policy and planning.
+          </p>
+          <div class="stack"><span class="chip">Siting analysis</span><span class="chip">Land use</span><span class="chip">Policy</span></div>
+          <p class="slot">Under review</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <p class="eyebrow">Research projects &mdash; completed</p>
+      <div class="projects">
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#4C7A4A"></span><span class="kind">MA thesis &middot; 2022&ndash;24</span></div>
+          <h3>25 years of land cover change, Northern Rio Grande Corridor</h3>
+          <p>
+            Multi-temporal Random Forest classification of Landsat imagery, 1995&ndash;2020.
+            Leaf-on, leaf-off and index-enhanced models were compared, then combined in an
+            elevation-stratified post-classification composite &mdash; split at 2,000 m &mdash;
+            that mosaics separate lowland and highland models to raise overall accuracy.
+          </p>
+          <div class="stack"><span class="chip">Landsat</span><span class="chip">Random Forest</span><span class="chip">Intensity analysis</span><span class="chip">R</span></div>
+          <p class="slot">Maps &amp; code &rarr; to be added</p>
+        </article>
+
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#B4844A"></span><span class="kind">Field research &middot; 2024</span></div>
+          <h3>Mesquite encroachment, Jornada Experimental Range</h3>
+          <p>
+            NRCS-funded work with the SPaRC Lab at NMSU on shrub encroachment in southern New
+            Mexico rangeland &mdash; field spectroradiometry and UAV flights for high-resolution
+            ecological monitoring.
+          </p>
+          <div class="stack"><span class="chip">UAV</span><span class="chip">Field spec</span><span class="chip">Rangeland</span></div>
+          <div class="pub-acts"><a class="act" href="field.html">Field photographs &rarr;</a></div>
+        </article>
+
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#9A3B3B"></span><span class="kind">Collaboration &middot; 2025</span></div>
+          <h3>Wildfire risk, Los Angeles &amp; Ventura Counties</h3>
+          <p>
+            Risk prediction and assessment across two Southern California counties, combining
+            terrain, fuel, climate and exposure layers into a mapped risk surface.
+          </p>
+          <div class="stack"><span class="chip">Risk modelling</span><span class="chip">Python</span><span class="chip">Remote sensing</span></div>
+          <p class="slot">Published &mdash; link to be added</p>
+        </article>
+
+        <article class="project">
+          <div class="swatch-row"><span class="swatch" style="background:#5A6B7A"></span><span class="kind">Applied research &middot; 2022</span></div>
+          <h3>Fenceline communities, Asutifi North District, Ghana</h3>
+          <p>
+            Fieldwork with WACAM Ghana on children of school-going age in the communities
+            bordering Newmont&rsquo;s mining operations &mdash; qualitative and quantitative data
+            collection and analysis in the communities themselves.
+          </p>
+          <div class="stack"><span class="chip">Mixed methods</span><span class="chip">Community survey</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="sitefooter" id="contact">
+  <div class="wrap">
+    <div class="footgrid">
+      <div>
+        <h2>Get in touch</h2>
+        <p style="color:var(--ink-2);margin:0">
+          Collaborations on water security, land-use change and UAV-based monitoring &mdash;
+          and conversations about postdoctoral and applied geospatial roles.
+        </p>
+        <div class="mailrow">
+          <code id="email">nicholas.aboagye@utdallas.edu</code>
+          <button class="copybtn" id="copyEmail" type="button">Copy</button>
+        </div>
+        <p class="where">
+          Cecil H. Green Hall (GR) 3.414<br>
+          The University of Texas at Dallas<br>
+          800 W Campbell Rd<br>
+          Richardson, TX 75080
+        </p>
+      </div>
+      <div>
+        <p class="subhead" style="margin-top:0">Pages</p>
+        <ul class="footnav">
+          <li><a href="index.html">About</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="field.html">Field &amp; outreach</a></li>
+          <li><a href="record.html">Record</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="subhead" style="margin-top:0">Elsewhere</p>
+        <div class="profilelinks">
+          <a class="plink" href="#" aria-disabled="true">CV</a>
+          <a class="plink" href="#" aria-disabled="true">Google Scholar</a>
+          <a class="plink" href="#" aria-disabled="true">ORCID</a>
+          <a class="plink" href="#" aria-disabled="true">ResearchGate</a>
+          <a class="plink" href="#" aria-disabled="true">GitHub</a>
+          <a class="plink" href="#" aria-disabled="true">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <div class="colophon">
+      <div class="scalebar">
+        <div class="bar"><i></i><i></i><i></i><i></i></div>
+        <div class="ticks"><span>0</span><span>5</span><span>10&nbsp;km</span></div>
+      </div>
+      <div>
+        <div>&copy; 2026 Nicholas Aboagye &middot; Richardson, Texas</div>
+        <div>Set in Archivo, Newsreader and IBM Plex Mono. Graticule EPSG:4326.</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>
