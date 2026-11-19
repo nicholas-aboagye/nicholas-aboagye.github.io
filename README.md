@@ -3,7 +3,7 @@
 Personal and portfolio site for Nicholas Aboagye, PhD candidate in Geospatial Information
 Sciences at The University of Texas at Dallas.
 
-**Live at:** https://nicholasaboagye.github.io (update once the repository is published)
+**Live at:** https://nicholas-aboagye.github.io
 
 ## What this is
 
