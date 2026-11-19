@@ -117,6 +117,9 @@
       ];
 
       let hoverHighlight = null;
+      // Set synchronously: populateStatesList is async, so without this guard a
+      // second call can pass the emptiness check before the first has appended.
+      let statesListPopulated = false;
 
       // Wait for the view to be ready
       await viewElement.viewOnReady();
@@ -172,7 +175,8 @@
       function updateStatesList(layer, visible) {
         if (visible) {
           viewElement.whenLayerView(layer).then((layerView) => {
-            if (statesList.children.length === 0) {
+            if (!statesListPopulated) {
+              statesListPopulated = true;
               populateStatesList(layerView);
             }
 
